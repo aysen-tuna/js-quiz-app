@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Quiz App</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  </head>
+
+  <body>
+    <main class="container">
+      <h1 class="quiz-title">JS - Primitive Types Quiz</h1>
+
+      <section id="startCard" class="card">
+        <h2>Welcome to the Quiz</h2>
+        <p>
+          This quiz will test your knowledge of JavaScript primitive types and
+          syntax.
+        </p>
+        <ul>
+          <li>You will answer 10 questions.</li>
+          <li>You can Restart anytime.</li>
+          <li>At the end, send results and explanations to your email.</li>
+        </ul>
+
+        <button id="startBtn">Start Quiz</button>
+      </section>
+
+      <section id="quizCard" class="card hidden">
+        <div class="quiz-header">
+          <span id="progress">Question 1 / 10</span>
+          <span id="scorePreview">Score: 0</span>
+        </div>
+
+        <h2 id="questionText">Loading…</h2>
+        <div id="choices" class="options"></div>
+
+        <div class="actions">
+          <button class="restartBtn">Restart</button>
+          <button id="nextBtn" disabled>Next</button>
+        </div>
+      </section>
+
+      <section id="resultCard" class="card hidden">
+        <h2>Your Result</h2>
+        <p id="resultSummary"></p>
+
+        <p id="completedAt"></p>
+        <details>
+          <summary>Show answers</summary>
+          <ol id="explanations"></ol>
+        </details>
+
+        <form id="emailForm" class="email-form" novalidate>
+          <h3>Send results to your email</h3>
+          <label>
+            Your Name
+            <input type="text" id="userName" required />
+          </label>
+          <label>
+            Your Email
+            <input type="email" id="userEmail" required />
+          </label>
+          <button type="submit">Send Result</button>
+          <p id="emailStatus"></p>
+        </form>
+
+        <button class="restartBtn">Restart</button>
+      </section>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
