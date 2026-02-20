@@ -109,7 +109,7 @@ function render() {
   scorePreview.textContent = `Score: ${calcScore()}`;
   questionText.textContent = q.q;
 
-  choicesEl.innerHTML = "";
+  choicesEl.replaceChildren();
   q.choices.forEach((text, i) => {
     const btn = document.createElement("button");
     btn.type = "button";
@@ -131,6 +131,14 @@ function calcScore() {
   );
 }
 
+function createRow(label, value) {
+  const div = document.createElement("div");
+  const strong = document.createElement("strong");
+  strong.textContent = label;
+  div.append(strong, document.createTextNode(` ${value}`));
+  return div;
+}
+
 function selectAnswer(i) {
   selected[index] = i;
   [...choicesEl.children].forEach((c) => c.classList.remove("selected"));
@@ -150,18 +158,21 @@ function showResult() {
     completedAtEl.textContent = `Completed at: ${completedAt.toLocaleString()}`;
   }
 
-  explanations.innerHTML = "";
+  explanations.replaceChildren();
   questions.forEach((q, i) => {
     const li = document.createElement("li");
     const ok = selected[i] === q.answer;
 
-    li.innerHTML = `
-      <div><strong>Q${i + 1}:</strong> ${q.q}</div>
-      <div><strong>Correct:</strong> ${q.choices[q.answer]}</div>
-      <div><strong>Your:</strong> ${q.choices[selected[i]] ?? "-"}</div>
-      <small>${q.why}</small>
-    `;
-    li.style.color = ok ? "lightgreen" : "salmon";
+    const row1 = createRow(`Q${i + 1}:`, q.q);
+    const row2 = createRow("Correct:", q.choices[q.answer]);
+    const row3 = createRow("Your:", q.choices[selected[i]] ?? "-");
+
+    const explanation = document.createElement("p");
+    explanation.textContent = q.why;
+
+    li.append(row1, row2, row3, explanation);
+
+    li.classList.add(ok ? "explain-ok" : "explain-bad");
     explanations.appendChild(li);
   });
 }
@@ -234,7 +245,7 @@ if (emailForm) {
             return [
               `Q${i + 1}: ${q.q}`,
               `Correct: ${correct}`,
-              `Your: ${your} ${ok ? "✓" : "✗"}`,
+              `Your: ${your} ${ok ? "✅" : "❌"}`,
               `Why: ${q.why}`,
               `---`,
             ].join("\n");

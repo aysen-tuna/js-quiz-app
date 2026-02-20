@@ -102,9 +102,17 @@ button[disabled] {
 }
 
 #explanations li {
-  margin: 15px 0; 
-
+  margin: 15px 0;
 }
+
+.explain-ok {
+  color: lightgreen;
+}
+
+.explain-bad {
+  color: salmon;
+}
+
 .email-form {
   display: grid;
   gap: 10px;
